@@ -1,0 +1,78 @@
+<div flash-messages class="{{ successClass }}"></div>
+<div class="panel">
+    <h3 class="panel-heading">User List</h3>
+    <div class="row">
+        <div class="col-xs-6">
+            <form name="myForm" novalidate data-ng-submit="addUser(newUser)">
+                <div class="well">
+                    <div class="form-group row">
+                        <label for="firstName">First Name</label>
+                        <input id="firstName" name="firstName" class="form-control"
+                               data-ng-model="newUser.firstName" required
+                               data-ng-maxlength="10" data-ng-minlength="4" data-ng-pattern="/^[A-z]+$/"/>
+                        <div class="error" data-ng-show="myForm.firstName.$invalid && myForm.firstName.$dirty">
+                            {{ getError(myForm.firstName.$error) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastName">Last Name</label>
+                        <input id="lastName" name="lastName" class="form-control"
+                               data-ng-model="newUser.lastName" required
+                               data-ng-minlength="4" data-ng-maxlength="10" data-ng-pattern="/^[A-z]+$/"/>
+                        <div class="error" data-ng-show="myForm.lastName.$invalid && myForm.lastName.$dirty">
+                            {{ getError(myForm.lastName.$error) }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="myForm.$invalid">Add</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-6">
+           <!-- <div class="gridStyle" ng-grid="gridOptions"></div>-->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="user in users">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ user.firstName }} {{ user.lastName }}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-wrench" data-ng-click="editUser($index)"></span>
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-remove" data-ng-click="removeUser($index)"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12" data-ng-show="showEditForm === 1">
+            <div class="well">
+                <form name="editForm" novalidate data-ng-submit="editedUsers(editedUser)">
+                    <h3 class="h3">Edit User Form</h3>
+                    <div class="form-group row">
+                        <label for="firstnameED">First Name</label>
+                        <input id="firstnameED" name="firstnameED" class="form-control"
+                               data-ng-model="editedUser[0].firstNameED" required
+                               data-ng-maxlength="10" data-ng-minlength="4" data-ng-pattern="/^[A-z]+$/"
+                               value="{{editedUser[0].firstNameED}}"/>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastnameED">Last Name</label>
+                        <input id="lastnameED" name="lastnameED" class="form-control"
+                               data-ng-model="editedUser[0].lastNameED" required
+                               data-ng-maxlength="10" data-ng-minlength="4" data-ng-pattern="/^[A-z]+$/"
+                               value="{{editedUser[0].lastNameED}}"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="editForm.$invalid">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
